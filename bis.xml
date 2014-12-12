@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="2.5" type="plugin" group="content" method="upgrade" >
+<extension version="3.1" type="plugin" group="content" method="upgrade" >
   <name>Content - Plugin BIS</name>
   <author>Milan Zink</author>
   <creationDate>05/2012</creationDate>
   <copyright> </copyright>
   <license>GNU - general public license</license>
   <authorEmail>zeten30@gmail.com</authorEmail>
-  <version>1.3.0</version>
+  <version>1.0.0</version>
   <description>PLG_CONTENT_BIS_XML_DESCRIPTION</description>
 
   <files>

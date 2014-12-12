@@ -5,5 +5,5 @@ find . -name '*.xml' -exec dos2unix {} \;
 
 version=$(grep '<version>' bis.xml | sed -e 's/<[a-z\/]*>//g' | sed -e 's/ *//g')
 rm dist/plugin_bis*.zip
-zip -r plugin_bis-${version}-j25.zip myr images cs-CZ.* en-GB.* bis.php bis.xml index.html
+zip -r plugin_bis-${version}-j3X.zip myr images cs-CZ.* en-GB.* bis.php bis.xml index.html
 mv plugin_bis-${version}*.zip dist/
