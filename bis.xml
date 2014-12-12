@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="content" method="upgrade" >
+  <name>Content - Plugin BIS</name>
+  <author>Milan Zink</author>
+  <creationDate>05/2012</creationDate>
+  <copyright> </copyright>
+  <license>GNU - general public license</license>
+  <authorEmail>zeten30@gmail.com</authorEmail>
+  <version>1.3.0</version>
+  <description>PLG_CONTENT_BIS_XML_DESCRIPTION</description>
+
+  <files>
+    <filename plugin="bis">bis.php</filename>
+    <filename>index.html</filename>
+    <folder>myr</folder>
+    <folder>images</folder>
+  </files>
+
+  <languages>
+    <language tag="cs-CZ">cs-CZ.plg_content_bis.ini</language>
+    <language tag="cs-CZ">cs-CZ.plg_content_bis.sys.ini</language>
+    <language tag="en-GB">en-GB.plg_content_bis.ini</language>
+    <language tag="en-GB">en-GB.plg_content_bis.sys.ini</language>
+  </languages>
+
+  <config>
+    <fields name="params">
+
+      <fieldset name="basic">
+        <field name="bis_url" type="text" default="http://bis.brontosaurus.cz/remote.php"
+               label="PLG_CONTENT_BIS_REM_LBL"
+               description="PLG_CONTENT_BIS_REM_DESC"/>
+        <field name="bis_user" type="text" default=""
+               label="PLG_CONTENT_BIS_USER_LBL"
+               description="PLG_CONTENT_BIS_USER_DESC" />
+        <field name="bis_password" type="password" default=""
+               label="PLG_CONTENT_BIS_PSWD_LBL"
+               description="PLG_CONTENT_BIS_PSWD_DESC" />
+        <field name="attachment_url" type="text" default="http://bis.brontosaurus.cz/files/psb/"
+               label="PLG_CONTENT_BIS_ATTCH_LBL"
+               description="PLG_CONTENT_BIS_ATTCH_DESC"/>
+      </fieldset>
+
+      <fieldset name="view_style" label="PLG_CONTENT_BIS_STYLE" description="PLG_CONTENT_BIS_STYLE_DESC">
+        <field name="css_class" type="text" default="plg_bis"
+               label="PLG_CONTENT_BIS_CSS_LBL"
+               description="PLG_CONTENT_BIS_CSS_DESC" />
+        <field name="icon-type" type="list" default="PNG"
+               label="PLG_CONTENT_BIS_ICO_LBL"
+               description="PLG_CONTENT_BIS_ICO_DESC">
+          <option value="png">PNG</option>
+          <option value="gif">GIF</option>
+        </field>
+        <field name="show_bis_query" type="list" default="0"
+               label="PLG_CONTENT_BIS_SHQUE_LBL"
+               description="PLG_CONTENT_BIS_SHQUE_DESC">
+          <option value="0">Ne</option>
+          <option value="1">Ano (jen pro ladění)</option>
+        </field>
+      </fieldset>
+
+      <fieldset name="detail_links" label="PLG_CONTENT_BIS_LINKS" description="PLG_CONTENT_BIS_LINKS_DESC">
+        <field name="detail-url" type="text" default="kalendar-akci/detail/"
+               label="PLG_CONTENT_BIS_DETURL_LBL"
+               description="PLG_CONTENT_BIS_DETURL_DESC"/>
+        <field name="detail-url-vik" type="text" default=""
+               label="PLG_CONTENT_BIS_VIKURL_LBL"
+               description="PLG_CONTENT_BIS_VIKURL_DESC"/>
+        <field name="detail-url-tabor" type="text" default=""
+               label="PLG_CONTENT_BIS_CAMURL_LBL"
+               description="PLG_CONTENT_BIS_CAMURL_DESC"/>
+        <field name="detail-url-klub" type="text" default=""
+               label="PLG_CONTENT_BIS_CLBURL_LBL"
+               description="PLG_CONTENT_BIS_CLBURL_DESC"/>
+      </fieldset>
+
+      <fieldset name="templates_list_actions" label="PLG_CONTENT_BIS_TLACT" description="PLG_CONTENT_BIS_TLACT_DESC">
+        <field name="akce-head" type="textarea" default=""
+               label="PLG_CONTENT_BIS_HEAD_LBL"
+               description="PLG_CONTENT_BIS_ACT_HEAD_DESC" rows="2" cols="40" filter="raw"/>
+        <field name="akce-item" type="textarea" default='
+&lt;div style="clear: right;"&gt;
+&lt;h3&gt;
+&lt;a href="##link_detail_plg_bis##"&gt;
+##nazev##
+&lt;/a&gt;
+##ikona_prg_plg_bis=26,tmava,ikona-pr##&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;##od_do_plg_bis##&lt;/em&gt;&lt;/p&gt;
+&lt;div&gt;
+---if obrazek---
+&lt;div style="float: right"&gt;##obrazek_plg_bis=200,0,bis_img##&lt;/div&gt;
+------
+##text##
+&lt;/div&gt;
+&lt;p&gt;
+&lt;strong&gt;Místo:&lt;/strong&gt; ##lokalita##
+---if_not promenna=sraz,---
+&lt;strong&gt;Sraz:&lt;/strong&gt; ##sraz##
+------
+&lt;strong&gt;Věk:&lt;/strong&gt; ##vek_plg_bis##
+&lt;strong&gt;Kontakt:&lt;/strong&gt; ##kontakt##
+&lt;strong&gt;Telefon:&lt;/strong&gt; ##kontakt_telefon##
+---if_not promenna=web,---
+&lt;strong&gt;Web:&lt;/strong&gt; ##web_plg_bis##
+------
+&lt;strong&gt;Email:&lt;/strong&gt; ##kontakt_email_plg_bis##
+---if prilohy---
+&lt;strong&gt;Přílohy:&lt;/strong&gt;
+##staz_priloh_plg_bis##
+------
+&lt;/p&gt;
+&lt;/div&gt;
+        '
+               label="PLG_CONTENT_BIS_ACT_LBL"
+               description="PLG_CONTENT_BIS_ACT_DESC"
+               rows="6" cols="40" filter="raw"/>
+        <field name="akce-foot" type="textarea" default=""
+               label="PLG_CONTENT_BIS_FOOT_LBL"
+               description="PLG_CONTENT_BIS_ACT_FOOT_DESC"
+               rows="2" cols="40" filter="raw"/>
+      </fieldset>
+
+      <fieldset name="templates_action_detail" label="PLG_CONTENT_BIS_TACTD" description="PLG_CONTENT_BIS_TACTD_DESC">
+        <field name="akce-detail-head" type="textarea" default=""
+               label="PLG_CONTENT_BIS_HEAD_LBL"
+               description="PLG_CONTENT_BIS_ACT_HEAD_DESC"
+               rows="2" cols="40" filter="raw"/>
+        <field name="akce-detail-item" type="textarea" default='
+&lt;div&gt;
+&lt;h3&gt;##nazev##
+##ikona_prg_plg_bis=38,tmava,ikona-pr##
+&lt;/h3&gt;
+&lt;p&gt;
+&lt;em&gt;##od##
+---if_not promenna=sraz,---
+##sraz##
+------
+- ##do##&lt;/em&gt;
+&lt;/p&gt;
+&lt;div&gt;
+&lt;div style="float: right"&gt;##obrazek_plg_bis=200,0,bis_img##&lt;/div&gt;
+##text##
+&lt;/div&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Druh:&lt;/th&gt;
+&lt;td&gt;##typ##&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th&gt;Místo:&lt;/th&gt;
+&lt;td&gt;##lokalita## &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th&gt;Věk:&lt;/th&gt;
+&lt;td&gt;##vek_plg_bis## &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th&gt;Pořádající ZČ nebo klub:&lt;/th&gt;
+&lt;td&gt;##porada##&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th&gt;Organizátorský tým:&lt;/th&gt;
+&lt;td&gt;##org##&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th&gt;Kontakt:&lt;/th&gt;
+&lt;td&gt;##kontakt##&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th&gt;Telefon:&lt;/th&gt;
+&lt;td&gt;##kontakt_telefon## &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th&gt;Email:&lt;/th&gt;
+&lt;td&gt;##kontakt_email_plg_bis##&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th&gt;Web:&lt;/th&gt;
+&lt;td&gt;##web_plg_bis##&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+        '
+               label="PLG_CONTENT_BIS_ACT_LBL"
+               description="PLG_CONTENT_BIS_ACT_DESC"
+               rows="6" cols="40" filter="raw"/>
+        <field name="akce-detail-foot" type="textarea" default=""
+               label="PLG_CONTENT_BIS_FOOT_LBL"
+               description="PLG_CONTENT_BIS_ACT_FOOT_DESC"
+               rows="2" cols="40" filter="raw"/>
+      </fieldset>
+
+      <fieldset name="templates_camp_detail" label="PLG_CONTENT_BIS_TCAMD" description="PLG_CONTENT_BIS_TCAMD_DESC">
+        <field name="tabor-head" type="textarea" default=""
+               label="PLG_CONTENT_BIS_HEAD_LBL"
+               description="PLG_CONTENT_BIS_ACT_HEAD_DESC"
+               rows="2" cols="40" filter="raw"/>
+        <field name="tabor-item" type="textarea" default='
+&lt;h2&gt;##nazev##
+##ikona_prg_plg_bis=38,tmava,ikona-pr##
+&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;##od## - ##do##&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;div&gt;
+---if obrazek---
+&lt;div style="float: right; margin: 0 0 5px 5px;" /&gt;##obrazek_plg_bis=300,1,bis_img##&lt;/div&gt;
+&lt;div style="float: right; margin: 0 0 5px 5px;" /&gt;##obrazek_plg_bis=300,2,bis_img##&lt;/div&gt;
+------
+##text##
+&lt;/div&gt;
+
+---if promenna=typ,Pracovní---
+&lt;h3&gt;Popis práce&lt;/h3&gt;
+&lt;p&gt;##prace##&lt;/p&gt;
+&lt;p&gt;Denně se budete práci věnovat asi ##pracovni_doba## hodin. Obvykle se však nepracuje všechny dny tábora.&lt;/p&gt;
+------
+
+&lt;h3&gt;Ubytování &lt;/h3&gt;
+&lt;p&gt;##ubytovani##&lt;/p&gt;
+
+&lt;h3&gt;Strava &lt;/h3&gt;
+&lt;p&gt;##strava##&lt;/p&gt;
+
+&lt;h3&gt;Místo &lt;/h3&gt;
+&lt;p&gt;##lokalita## Podívejte se na &lt;a href="##lokalita_mapa##" target="_new"&gt;mapu&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pořádající ZČ:&lt;/strong&gt; ##porada##&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Organizátorský tým:&lt;/strong&gt; ##org##&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Odpovědný vedoucí:&lt;/strong&gt; ##odpovedna##&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Věk účastníků:&lt;/strong&gt; ##vek_plg_bis##&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Poplatek:&lt;/strong&gt; ##poplatek## Kč&lt;/p&gt;
+
+&lt;h3&gt;Kontaktujte nás&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Telefonem: &lt;/strong&gt; ##kontakt_telefon##&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;E-mailem: &lt;/strong&gt; ##kontakt_email_plg_bis##&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Na webu: &lt;/strong&gt; ##web_plg_bis##&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Kontaktní osoba:&lt;/strong&gt; ##kontakt##&lt;/p&gt;
+
+---if prilohy---
+&lt;h3&gt;Přílohy:&lt;/h3&gt;
+&lt;ul&gt;
+------
+
+---if_not promenna=priloha_1,---
+##staz_priloh_plg_bis=1##
+------
+
+---if_not promenna=priloha_2,---
+##staz_priloh_plg_bis=2##
+------
+
+---if prilohy---
+&lt;/ul&gt;
+------
+        '
+               label="PLG_CONTENT_BIS_CAMP_LBL"
+               description="PLG_CONTENT_BIS_ACT_DESC"
+               rows="6" cols="40" filter="raw"/>
+        <field name="tabor-foot" type="textarea" default=""
+               label="PLG_CONTENT_BIS_FOOT_LBL"
+               description="PLG_CONTENT_BIS_ACT_FOOT_DESC"
+               rows="2" cols="40" filter="raw"/>
+      </fieldset>
+
+      <fieldset name="templates_list_zc" label="PLG_CONTENT_BIS_TLZC" description="PLG_CONTENT_BIS_TLZC_DESC">
+        <field name="zc-head" type="textarea" default=""
+               label="PLG_CONTENT_BIS_HEAD_LBL"
+               description="PLG_CONTENT_BIS_ZC_DESC"
+               rows="2" cols="40" filter="raw"/>
+        <field name="zc-item" type="textarea" default='
+&lt;div&gt;
+&lt;h2&gt;##nazev##&lt;/h2&gt;
+&lt;p&gt;
+&lt;strong&gt;Město:&lt;/strong&gt; ##mesto##
+---if_not promenna=www,---
+&lt;strong&gt;Web:&lt;/strong&gt; ##www_plg_bis##
+------
+---if_not promenna=email,---
+&lt;strong&gt;E-mail:&lt;/strong&gt; ##email_plg_bis##
+------
+---if_not promenna=telefon,---
+&lt;strong&gt;Telefon:&lt;/strong&gt; ##telefon##
+------
+&lt;/p&gt;
+&lt;/div&gt;
+        '
+               label="PLG_CONTENT_BIS_ZC_LBL"
+               description="PLG_CONTENT_BIS_ZC_LIST_DESC"
+               rows="6" cols="40" filter="raw"/>
+        <field name="zc-foot" type="textarea" default=""
+               label="PLG_CONTENT_BIS_FOOT_LBL"
+               description="PLG_CONTENT_BIS_FOOT_ZC_LIST_DESC"
+               rows="2" cols="40" filter="raw"/>
+      </fieldset>
+
+      <fieldset name="templates_list_qal" label="PLG_CONTENT_BIS_TLQAL" description="PLG_CONTENT_BIS_TLQAL_DESC">
+        <field name="qal-head" type="textarea" default=""
+               label="PLG_CONTENT_BIS_HEAD_LBL"
+               description="PLG_CONTENT_BIS_HEAD_QUAL_DESC"
+               rows="2" cols="40" filter="raw"/>
+        <field name="qal-item" type="textarea" default='
+&lt;div&gt;
+&lt;h3&gt;##kdo##&lt;/h3&gt;
+&lt;strong&gt;Druh:&lt;/strong&gt; ##druh## &lt;strong&gt;Platnost:&lt;/strong&gt; ##od_do_plg_bis##
+&lt;strong&gt;Schválil:&lt;/strong&gt; ##schvalil##
+&lt;/div&gt;
+        '
+               label="PLG_CONTENT_BIS_QUAL_LBL"
+               description="PLG_CONTENT_BIS_QUAL_DESC"
+               rows="6" cols="40" filter="raw"/>
+        <field name="qal-foot" type="textarea" default=""
+               label="PLG_CONTENT_BIS_FOOT_LBL"
+               description="PLG_CONTENT_BIS_FOOT_QUAL_DESC"
+               rows="2" cols="40" filter="raw"/>
+      </fieldset>
+
+      <fieldset name="templates_list_participants" label="PLG_CONTENT_BIS_TLPAR" description="PLG_CONTENT_BIS_TLPAR_DESC">
+        <field name="ucastnici-head" type="textarea" default=""
+               label="PLG_CONTENT_BIS_HEAD_LBL"
+               description="PLG_CONTENT_BIS_HEAD_PRTC_DESC"
+               rows="2" cols="40" filter="raw"/>
+        <field name="ucastnici-item" type="textarea" default=""
+               label="PLG_CONTENT_BIS_PRTC_LBL"
+               description="PLG_CONTENT_BIS_PRTC_DESC"
+               rows="6" cols="40" filter="raw"/>
+        <field name="ucastnici-foot" type="textarea" default=""
+               label="PLG_CONTENT_BIS_FOOT_LBL"
+               description="PLG_CONTENT_BIS_FOOT_PRTC_DESC"
+               rows="2" cols="40" filter="raw"/>
+      </fieldset>
+
+    </fields>
+  </config>
+
+</extension>
