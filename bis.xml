@@ -2,7 +2,7 @@
 <extension version="3.1" type="plugin" group="content" method="upgrade" >
   <name>Content - Plugin BIS</name>
   <author>Milan Zink</author>
-  <creationDate>05/2012</creationDate>
+  <creationDate>12/2014</creationDate>
   <copyright> </copyright>
   <license>GNU - general public license</license>
   <authorEmail>zeten30@gmail.com</authorEmail>
